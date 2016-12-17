@@ -11,6 +11,7 @@ Futurama
 Star Wars
 ```
 ### Sample Input
+Releases from [this week](http://www.comiclist.com/index.php/newreleases/this-week).
 ```
 12/14/16,IMAGE COMICS,Descender #17,$2.99
 12/14/16,IMAGE COMICS,Descender Volume 3 Singularities TP,$14.99
