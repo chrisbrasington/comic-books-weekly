@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'rss'
 require 'open-uri'
 require 'yaml'
@@ -30,7 +31,6 @@ end
 
 # pushover notification
 def pushover(apptoken, usertoken, message)
-  puts
   puts 'Responding via pushover.'
   url = URI.parse("https://api.pushover.net/1/messages.json")
   req = Net::HTTP::Post.new(url.path)
@@ -45,6 +45,27 @@ def pushover(apptoken, usertoken, message)
   res.start {|http| http.request(req) }
 end
 
+# 0 - Sunday
+# 1 - Monday
+# 2 - Tuesday 
+# 3 - Wednesday
+# 4 - Thursday
+# 5 - Friday
+# 6 - Saturday
+def get_wednesday 
+  # Wednesday
+  if Date.today.wday == 3
+    return Date.today
+  end
+  # add if Sunday, Monday, Tuesday
+  if(Date.today.wday < 3)
+    return Date.today + (3 - Date.today.wday)
+  end
+  
+  # subtract if Thursday, Friday, Saturday
+  return Date.today - (Date.today.wday - 3)
+end
+
 # weekly comic feed
 url = 'http://feeds.feedburner.com/ncrl?format=xml'
 
@@ -54,17 +75,12 @@ pull = File.read('pull.txt').split("\n").map(&:downcase)
 # found comics
 comics = []
 
-# wednesday
-wednesday = ''
+# comics released every Wednesday
+wednesday = get_wednesday().strftime("%m/%d/%Y")
 
 open(url) do |rss|
   # parse RSS
   feed = RSS::Parser.parse(rss)
-
-  print 'Comics release on '
-
-  # crazy-ass parsing to get Wednesday of this week
-  wednesday = (Date.today - (Date.today.wday - (Date.today.wday + 5) % 7).abs).strftime("%m/%d/%Y")
 
   # first item is this week
   feed.items.each do |item|
@@ -94,7 +110,7 @@ end
 comics = comics.sort_by { |c| [-c.name] }
 
 # create message
-message = "Comics released on '#{wednesday}'\n"
+message = "Comics released on #{wednesday}\n"
 comics.each do |c|
   message += c.to_s
   message += "\n"
