@@ -14,11 +14,11 @@ Star Wars
 ### Sample Input
 Releases from [this week](http://www.comiclist.com/index.php/newreleases/this-week).
 ```
-12/14/16,IMAGE COMICS,Descender #17,$2.99
-12/14/16,IMAGE COMICS,Descender Volume 3 Singularities TP,$14.99
-12/14/16,IMAGE COMICS,Drifter #15 (Cover A Nic Klein),$3.99
-12/14/16,IMAGE COMICS,Drifter #15 (Cover B David Rubin),$3.99
-12/14/16,IMAGE COMICS,Fuse #24,$3.99
+<p><strong><u>ONI PRESS</u></strong><br />
+<a href="http://comics.gocollect.com/priceguide/view/962026">Invader Zim #16 (Cover A Aaron Alexovich)</a>, $3.99<br />
+<a href="http://comics.gocollect.com/priceguide/view/962027">Invader Zim #16 (Cover B Shmorky)</a>, $3.99<br />
+<a href="http://comics.gocollect.com/priceguide/view/962665">Night's Dominion #4</a>, $3.99<br />
+</p>
 ```
 ### Sample Output
 ```
