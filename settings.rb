@@ -2,9 +2,8 @@ class Settings
 
   attr_accessor :list
 
-  def initialize
-    fullPath = "./"
-    settings = YAML.load_file(fullPath+'settings.yml')
+  def initialize (path)
+    settings = YAML.load_file(path)
     @list = settings
   end
 end

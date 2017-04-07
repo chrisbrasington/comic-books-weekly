@@ -102,7 +102,7 @@ url_this_week = 'http://feeds.feedburner.com/comiclistfeed?format=xml'
 url_next_week = 'http://feeds.feedburner.com/comiclistnextweek?format=xml'
 
 # pull list of comics
-pull = File.read('/home/christopher/repo/comic-books-weekly/pull.txt').split("\n").map(&:downcase)
+pull = File.read(ARGV[0]).split("\n").map(&:downcase)
 
 # comics released every Wednesday
 wednesday = get_wednesday()
@@ -186,7 +186,7 @@ feed.items.each do |item|
 end
 
 # if pushover setting exists, respond via pushover
-settings = Settings.new
+settings = Settings.new(ARGV[1])
 if !settings.list['pushover'].nil?
   apitoken = settings.list['pushover']['apitoken']
   usertoken = settings.list['pushover']['userkey']

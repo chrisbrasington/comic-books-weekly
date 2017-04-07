@@ -4,6 +4,11 @@ Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking 
 
 If [PushOver](https://pushover.net/) settings exist, notification is sent via PushOver.
 
+First parameter is pull list.
+Second parameter is pushover settings file.
+
+comics.rb /path/to/pull.txt /path/to/settings.yml
+
 ### Sample pull.txt
 ```
 Descender
