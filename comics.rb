@@ -27,8 +27,8 @@ end
 
 # pushover notification
 def pushover(apptoken, usertoken, message)
-  puts
   puts 'Responding via pushover.'
+  puts
   url = URI.parse("https://api.pushover.net/1/messages.json")
   req = Net::HTTP::Post.new(url.path)
   req.set_form_data({
@@ -63,6 +63,20 @@ def get_wednesday
   return Date.today - (Date.today.wday - 3)
 end
 
+# parse date from feed title
+def get_feed_day(item)
+  date = item.to_s[/\<title>(.*?)<\/title>/,1] 
+  
+  if date.nil?
+    date = item.to_s[/for (.*?) \(/,1] 
+  else
+    date.slice! "ComicList: New Comic Book Releases List for "
+    date.slice! " (1 Week Out)"
+  end
+
+  return date
+end
+
 # parse a week of comic content
 def parse_feed_item(item, pull)
   # found comics
@@ -72,14 +86,17 @@ def parse_feed_item(item, pull)
   item = Nokogiri::HTML(item.to_s).text.to_s
   item = item.gsub("\n",'')
 
+
   # split per row
   item.to_s.split('<br />').each do |row|
 
     # looking only for numbered issues (not tradeback (TP) or AR merchandise)
     # remove the + ' #' if you want to allow less 'full titles'
     #   for example, 'Star Wars' will pick up seoncary comics like 'Star Wars: Han Solo'
-    #   with the space #, it'll only pick up strictly 'Star Wars #' comics of that single series
-    if row.include? '#' and row.include? '$' and pull.any?{ |c| row.to_s.downcase.include? c + ' #' }
+    #   with the space #, it'll only pick up strictly 
+    #   'Star Wars #' comics of that single series
+    if row.include? '#' and row.include? '$' and 
+      pull.any?{ |c| row.to_s.downcase.include? c + ' #' }
     
       # add comic
       comic = Comic.new(row.to_s)
@@ -93,6 +110,86 @@ def parse_feed_item(item, pull)
   comics = comics.sort_by { |c| [-c.name] }
   
   return comics
+end
+
+def parse_current_week(feed, pull, full_message)
+  full_message = ''
+  
+  # parse this week, then last week
+  iterations = 0
+  feed.items.each do |item|
+
+    # parse comics from feed
+    comics = parse_feed_item(item, pull)
+
+    # wednesday
+    wednesday = get_wednesday()
+    wed_actual = "#{wednesday.strftime("%m/%d/%Y")}"
+    wed_feed = get_feed_day(item)
+
+    # this week or next week  
+    if iterations == 0
+      if wed_actual == wed_feed
+        message = 'This Week'
+      else
+        message = 'Last Week'
+      end
+    elsif iterations == 1
+      if wed_actual == wed_feed
+        message = 'Last Week'
+      else 
+        message = '2 Weeks Ago'
+      end
+    end
+
+    message += " (" + wed_feed + ")\n"
+
+    # add each comic to message
+    comics.each do |c|
+      message += c.to_s
+      message += "\n"
+    end
+
+    iterations = iterations +1
+
+    # append message  
+    full_message += message
+    full_message += "\n"
+  end
+
+  return full_message
+end
+
+def parse_future_week(feed, pull, full_message)
+  # parse next week
+  feed.items.each do |item|
+    
+    comics = parse_feed_item(item, pull)
+    
+    # wednesday
+    wednesday = get_wednesday()
+    wed_actual = "#{wednesday.strftime("%m/%d/%Y")}"
+    wed_feed = get_feed_day(item)
+    
+    if wed_actual == wed_feed
+      message = 'This Week'
+    else
+      message = 'Next Week'
+    end
+    message += ' (' + wed_feed + ")\n"
+
+    # add each comic to message
+    comics.each do |c|
+      message += c.to_s
+      message += "\n"
+    end
+    
+    # append message
+    full_message = message + "\n" + full_message
+
+  end
+
+  return full_message
 end
 
 # weekly comic feed
@@ -118,42 +215,7 @@ open(url_this_week) do |rss|
 end
 
 # pushover message
-full_message = ''
-
-# parse this week, then last week
-iterations = 0
-feed.items.each do |item|
-  
-  comics = parse_feed_item(item, pull)
-
-  # wednesday
-  message = "(#{wednesday.strftime("%m/%d/%Y")})\n"
-
-  # this week or next week  
-  if iterations == 0
-    message = 'This Week ' + message
-  elsif iterations == 1
-    message = 'Last Week ' + message
-  end
-  
-  # add each comic to message
-  comics.each do |c|
-    message += c.to_s
-    message += "\n"
-  end
-
-  # display
-  puts message
-  puts
-  
-  # go back a week (if continuing in feed
-  wednesday = wednesday - 7
-  iterations = iterations +1
-
-  # append message  
-  full_message += message
-  full_message += "\n"
-end
+full_message = parse_current_week(feed, pull, '')
 
 # next week feed
 open(url_next_week) do |rss|
@@ -161,29 +223,10 @@ open(url_next_week) do |rss|
   feed = RSS::Parser.parse(rss)
 end
 
-# parse next week
-feed.items.each do |item|
-  comics = parse_feed_item(item, pull)
-  
-  message = 'Next Week '
-  message = message + "(#{(get_wednesday()+7).strftime("%m/%d/%Y")})\n"
-    
-  # add each comic to message
-  comics.each do |c|
-    message += c.to_s
-    message += "\n"
-  end
-  
-  # display
-  puts message
-  
-  # append message
-  full_message += message
-  
-  # break we've already checked prior weeks
-  break;
+full_message = parse_future_week(feed, pull, full_message)
 
-end
+# display full message
+puts full_message
 
 # if pushover setting exists, respond via pushover
 settings = Settings.new(ARGV[1])
