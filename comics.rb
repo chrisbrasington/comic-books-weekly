@@ -240,9 +240,11 @@ full_message = parse_future_week(feed, pull, full_message)
 puts full_message
 
 # if pushover setting exists, respond via pushover
-settings = Settings.new(ARGV[1])
-if !settings.list['pushover'].nil?
-  apitoken = settings.list['pushover']['apitoken']
-  usertoken = settings.list['pushover']['userkey']
-  pushover(apitoken, usertoken, full_message)
+if !ARGV[1].nil?
+  settings = Settings.new(ARGV[1])
+  if !settings.list['pushover'].nil?
+    apitoken = settings.list['pushover']['apitoken']
+    usertoken = settings.list['pushover']['userkey']
+    pushover(apitoken, usertoken, full_message)
+  end
 end
