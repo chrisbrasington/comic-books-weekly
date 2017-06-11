@@ -29,7 +29,6 @@ end
 
 # pushover notification
 def pushover(apptoken, usertoken, message)
-  return
   puts 'Responding via pushover.'
   puts
   url = URI.parse("https://api.pushover.net/1/messages.json")
