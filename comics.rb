@@ -14,11 +14,13 @@ end
 
 # comic class from csv
 class Comic
-  attr_accessor :name, :price
+  attr_accessor :name, :price, :short_name
   def initialize(csv)
     data = sanitize(csv).split(',')
     @name = data[0].chomp(' ')
     @price = data[1].delete(' ')
+    # short name is lowercase name without issue #
+    @short_name = @name.downcase.split('#')[0].chomp(' ')
   end
   def to_s
     s = @name
@@ -27,6 +29,7 @@ end
 
 # pushover notification
 def pushover(apptoken, usertoken, message)
+  return
   puts 'Responding via pushover.'
   puts
   url = URI.parse("https://api.pushover.net/1/messages.json")
@@ -92,18 +95,25 @@ def parse_feed_item(item, pull)
 
     # looking only for numbered issues (not tradeback (TP) or AR merchandise)
     # remove the + ' #' if you want to allow less 'full titles'
-    #   for example, 'Star Wars' will pick up seoncary comics like 'Star Wars: Han Solo'
+    #   for example, 'Star Wars' will pick up seoncary comics like 'Star Wars Darth Vader'
     #   with the space #, it'll only pick up strictly 
     #   'Star Wars #' comics of that single series
-    if row.include? '#' and row.include? '$' and 
-      pull.any?{ |c| row.to_s.downcase.include? c + ' #' }
+    if row.include? '#' and
+      pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " #"}
     
       # add comic
       comic = Comic.new(row.to_s)
-      comics.push(comic)
 
-      # remove from pull (prevents dupes, usually from variants)
-      pull.delete_if{|c| comic.name.downcase.include? c.downcase}
+      # if not already added (avoid duplicates)
+      #   and matches a record in the pull.
+      # This second check helps remove accidental wildcarding
+      # Example: if you're looking for 'Batman' the include? will
+      #   also pick up 'All-Star Batman'. 
+      # It'll only accept if it is in the pull text. 
+      if !comics.any? {|c| c.name == comic.name} and 
+        pull.any?{ |p| p.to_s == comic.short_name}
+        comics.push(comic)
+      end
     end
   end
   # sort and print
@@ -133,6 +143,8 @@ def parse_current_week(feed, pull, full_message)
         message = 'This Week'
       else
         message = 'Last Week'
+        # not current week, could abort
+        # or will treat feed as 'last week' and '2 weeks ago'
       end
     elsif iterations == 1
       if wed_actual == wed_feed

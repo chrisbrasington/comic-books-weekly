@@ -1,4 +1,5 @@
-Bombshells
+Batman
+DC Comics Bombshells
 Descender
 Futurama
 I Hate Fairyland
@@ -6,3 +7,5 @@ Invader Zim
 Monstress
 Rick and Morty
 Star Wars
+Star Wars Darth Vader
+Star Wars Doctor Aphra
