@@ -100,6 +100,11 @@ def parse_feed_item(item, pull)
     if row.include? '#' and
       pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " #"}
     
+      # skip variants, they can show up weeks after initial release
+      if row.to_s.include? "Variant"
+        next
+      end
+
       # add comic
       comic = Comic.new(row.to_s)
 
@@ -124,6 +129,8 @@ end
 def parse_current_week(feed, pull, full_message)
   full_message = ''
   
+  @already_parsed_this_week = false
+
   # parse this week, then last week
   iterations = 0
   feed.items.each do |item|
@@ -140,13 +147,14 @@ def parse_current_week(feed, pull, full_message)
     if iterations == 0
       if wed_actual == wed_feed
         message = 'This Week'
+        @already_parsed_this_week = true
       else
         message = 'Last Week'
         # not current week, could abort
         # or will treat feed as 'last week' and '2 weeks ago'
       end
     elsif iterations == 1
-      if wed_actual == wed_feed
+      if wed_actual == wed_feed or @already_parsed_this_week
         message = 'Last Week'
       else 
         message = '2 Weeks Ago'
@@ -176,7 +184,7 @@ def parse_future_week(feed, pull, full_message)
   feed.items.each do |item|
     
     comics = parse_feed_item(item, pull)
-    
+
     # wednesday
     wednesday = get_wednesday()
     wed_actual = "#{wednesday.strftime("%m/%d/%Y")}"
@@ -184,6 +192,10 @@ def parse_future_week(feed, pull, full_message)
     
     if wed_actual == wed_feed
       message = 'This Week'
+      # don't parse same week from 2 feeds twice
+      if @already_parsed_this_week
+        next
+      end
     else
       message = 'Next Week'
     end
@@ -196,7 +208,7 @@ def parse_future_week(feed, pull, full_message)
     end
     
     # append message
-    full_message = message + "\n" + full_message
+    full_message = full_message + message   
 
   end
 
