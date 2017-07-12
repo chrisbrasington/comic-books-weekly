@@ -1,4 +1,5 @@
-Bombshells
+Batman
+DC Comics Bombshells
 Descender
 Doctor Aphra
 Futurama
@@ -7,3 +8,5 @@ Invader Zim
 Monstress
 Rick and Morty
 Star Wars
+Star Wars Darth Vader
+Star Wars Doctor Aphra
