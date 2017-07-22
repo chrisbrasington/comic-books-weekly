@@ -197,7 +197,12 @@ def parse_future_week(feed, pull, full_message)
         next
       end
     else
-      message = 'Next Week'
+      days_away = (Date.strptime(wed_feed, "%m/%d/%Y")-Date.strptime(wed_actual, "%m/%d/%Y")).to_i
+      if days_away == 14
+        message = 'Two Weeks'
+      elsif days_away == 7
+        message = 'Next Week'
+      end
     end
     message += ' (' + wed_feed + ")\n"
 
@@ -208,7 +213,7 @@ def parse_future_week(feed, pull, full_message)
     end
     
     # append message
-    full_message = full_message + message   
+    full_message = full_message + message + "\n"
 
   end
 
