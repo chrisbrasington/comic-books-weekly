@@ -18,7 +18,7 @@ class Comic
   def initialize(csv)
     data = sanitize(csv).split(',')
     @name = data[0].chomp(' ')
-    @price = data[1].delete(' ')
+    @price = data[1].delete(' ').sub!('$', '').to_f
     # short name is lowercase name without issue #
     @short_name = @name.downcase.split('#')[0].chomp(' ')
   end
@@ -161,13 +161,18 @@ def parse_current_week(feed, pull, full_message)
       end
     end
 
-    message += " (" + wed_feed + ")\n"
+    message += " (" + wed_feed + ") "
 
+    comics_message = ""
+    price = 0
     # add each comic to message
     comics.each do |c|
-      message += c.to_s
-      message += "\n"
+      price += c.price.to_f
+      comics_message += c.to_s
+      comics_message += "\n"
     end
+    message += "- $" + price.round(2).to_s + "\n"
+    message += comics_message
 
     iterations = iterations +1
 
@@ -204,13 +209,19 @@ def parse_future_week(feed, pull, full_message)
         message = 'Next Week'
       end
     end
-    message += ' (' + wed_feed + ")\n"
+    message += ' (' + wed_feed + ") "
 
+    comics_message = ""
+    price = 0
     # add each comic to message
     comics.each do |c|
-      message += c.to_s
-      message += "\n"
+      price += c.price
+      comics_message += c.to_s
+      comics_message += "\n"
     end
+    
+    message += "- $" + price.round(2).to_s + "\n"
+    message += comics_message
     
     # append message
     full_message = full_message + message + "\n"
