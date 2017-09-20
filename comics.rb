@@ -91,31 +91,39 @@ def parse_feed_item(item, pull)
 
   # split per row
   item.to_s.split('<br />').each do |row|
-
+      
     # looking only for numbered issues (not tradeback (TP) or AR merchandise)
     # remove the + ' #' if you want to allow less 'full titles'
     #   for example, 'Star Wars' will pick up seoncary comics like 'Star Wars Darth Vader'
     #   with the space #, it'll only pick up strictly 
     #   'Star Wars #' comics of that single series
+    # 'annual' allows catching annuals of comics in pull, not specified as annuals
     if row.include? '#' and
-      pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " #"}
-    
+      (
+        pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " #"} or
+        pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " annual #"} 
+      )
+
       # skip variants, they can show up weeks after initial release
       if row.to_s.include? "Variant"
         next
       end
-
+      
       # add comic
       comic = Comic.new(row.to_s)
-
+      
       # if not already added (avoid duplicates)
       #   and matches a record in the pull.
       # This second check helps remove accidental wildcarding
       # Example: if you're looking for 'Batman' the include? will
       #   also pick up 'All-Star Batman'. 
-      # It'll only accept if it is in the pull text. 
+      # It'll only accept if it is in the pull text
+      #   with the exception of annuals.
       if !comics.any? {|c| c.name == comic.name} and 
-        pull.any?{ |p| p.to_s == comic.short_name}
+        (
+          pull.any?{ |p| p.to_s == comic.short_name} or
+          pull.any?{ |p| p.to_s + " annual" == comic.short_name} 
+        )
         comics.push(comic)
       end
     end
