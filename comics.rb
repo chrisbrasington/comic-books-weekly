@@ -16,11 +16,14 @@ end
 class Comic
   attr_accessor :name, :price, :short_name
   def initialize(csv)
-    data = sanitize(csv).split(',')
-    @name = data[0].chomp(' ')
-    @price = data[1].delete(' ').sub!('$', '').to_f
-    # short name is lowercase name without issue #
-    @short_name = @name.downcase.split('#')[0].chomp(' ')
+    begin
+      data = sanitize(csv).split(',')
+      @name = data[0].chomp(' ')
+      @price = data[1].delete(' ').sub!('$', '').to_f
+      # short name is lowercase name without issue #
+      @short_name = @name.downcase.split('#')[0].chomp(' ')
+    rescue
+    end
   end
   def to_s
     s = @name
@@ -81,13 +84,21 @@ end
 
 # parse a week of comic content
 def parse_feed_item(item, pull)
+
+  # gather all wildcarded pull items
+  wildcards = []
+  pull.each do |p|
+    if p.include? '*' 
+      wildcards.push(p.dup.gsub!('*',''))
+    end
+  end
+
   # found comics
   comics = []
 
   # clean up item
   item = Nokogiri::HTML(item.to_s).text.to_s
   item = item.gsub("\n",'')
-
 
   # split per row
   item.to_s.split('<br />').each do |row|
@@ -98,19 +109,15 @@ def parse_feed_item(item, pull)
     #   with the space #, it'll only pick up strictly 
     #   'Star Wars #' comics of that single series
     # 'annual' allows catching annuals of comics in pull, not specified as annuals
-    if row.include? '#' and
-      (
-        pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " #"} or
-        pull.any?{ |c| row.to_s.downcase.include? c.to_s.downcase + " annual #"} 
-      )
+    # skip variants, they can show up weeks after initial release
+    if row.include? '#' and not row.include? "Variant"
+      # comic object
+      comic = Comic.new(row.to_s)
 
-      # skip variants, they can show up weeks after initial release
-      if row.to_s.include? "Variant"
+      # skip over bad parse
+      if comic.nil? or comic.short_name.nil?
         next
       end
-      
-      # add comic
-      comic = Comic.new(row.to_s)
       
       # if not already added (avoid duplicates)
       #   and matches a record in the pull.
@@ -124,7 +131,17 @@ def parse_feed_item(item, pull)
           pull.any?{ |p| p.to_s == comic.short_name} or
           pull.any?{ |p| p.to_s + " annual" == comic.short_name} 
         )
+        # add comic
         comics.push(comic)
+      # check comic against any wildcards in the pull
+      # Example: "batman creature*" will be found within "batman creature of the night"
+      #   "nightwing*" will be found within "nightwing the new order"
+      else
+        wildcards.each do |w|
+          if comic.short_name.include? w.to_s and !comics.any? {|c| c.name == comic.name}
+            comics.push(comic)
+          end
+        end
       end
     end
   end
