@@ -31,7 +31,7 @@ end
 
 # comic class from csv
 class Comic
-  attr_accessor :name, :price, :short_name
+  attr_accessor :name, :price, :short_name, :wildcarded
   def initialize(csv)
     begin
       data = sanitize(csv).split(',')
@@ -39,11 +39,12 @@ class Comic
       @price = data[1].delete(' ').sub!('$', '').to_f
       # short name is lowercase name without issue #
       @short_name = @name.downcase.split('#')[0].chomp(' ')
+      @wildcarded = false
     rescue
     end
   end
   def to_s
-    s = @name
+    s = @name + (@wildcarded ? ' *' : '')
   end
 end
 
@@ -156,6 +157,9 @@ def parse_feed_item(item, pull)
       else
         wildcards.each do |w|
           if comic.short_name.include? w.to_s and !comics.any? {|c| c.name == comic.name}
+            if comic.short_name != w.to_s.gsub('*','')
+              comic.wildcarded = true
+            end
             comics.push(comic)
           end
         end
@@ -217,7 +221,6 @@ def get_week_message(feed_date)
 
   return response
 end
-
 
 # parse any week against pull
 # track dates to avoid duplication if called multiple times
