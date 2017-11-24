@@ -199,6 +199,14 @@ def get_week_message(feed_date)
     end
   end
 
+  # special - non-Wednesday feed date
+  # such as halloween or local comicbook shop day
+  #   (maybe free-comic-book-day or batman day but those are likely on wednesday already)
+  if feed_date.wday != 3
+    # message the day of the week difference
+    response += ' ' + feed_date.strftime("%A").upcase
+  end
+
   return response
 end
 
