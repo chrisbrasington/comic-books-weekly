@@ -13,7 +13,17 @@ require 'nokogiri'
 require 'yaml'
 require 'net/https'
 require 'date'
-require './settings'
+
+# settings file
+class Settings
+
+  attr_accessor :list
+
+  def initialize (path)
+    settings = YAML.load_file(path)
+    @list = settings
+  end
+end
 
 # remove html
 def sanitize s
@@ -261,11 +271,26 @@ end
 # main program
 def main()
 
+  # pull file
+  pull_file = ''
+
   # provide pull list file
   if ARGV.empty?
+    # no parameters, try current directory
+    pull_file = Dir.pwd + "/pull.txt"
+  else
+    # use parameter
+    pull_file = ARGV[0]
+  end
+
+  # failure to provide pull list
+  if not File.exists? pull_file
     puts 'Please provide pull list.'
     exit
   end
+
+  # pull list of comics
+  pull = File.read(pull_file).split("\n").map(&:downcase)
 
   # dates tracked to avoid duplication with multiple feeds
   dates_tracked = []
@@ -279,8 +304,6 @@ def main()
   # next weeks comic feed
   url_next_week = 'http://feeds.feedburner.com/comiclistnextweek?format=xml'
 
-  # pull list of comics
-  pull = File.read(ARGV[0]).split("\n").map(&:downcase)
 
   # parse RSS feed
   # this week and last week (typically) 
