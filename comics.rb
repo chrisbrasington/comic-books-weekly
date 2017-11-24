@@ -16,9 +16,7 @@ require 'date'
 
 # settings file
 class Settings
-
   attr_accessor :list
-
   def initialize (path)
     settings = YAML.load_file(path)
     @list = settings
@@ -220,10 +218,15 @@ def get_week_message(feed_date)
   return response
 end
 
+
 # parse any week against pull
 # track dates to avoid duplication if called multiple times
 #   with different feed
-def parse_week(feed, pull, full_message, dates_tracked)
+def parse_week(feed, pull, dates_tracked)
+
+  full_message = ''
+  prior_feed_date = ''
+
   # parse this week, then last week
   feed.items.each do |item|
   
@@ -235,6 +238,9 @@ def parse_week(feed, pull, full_message, dates_tracked)
 
     # wednesday
     wed_feed = get_feed_date(item)
+    if prior_feed_date == ''
+      prior_feed_date = wed_feed
+    end
 
     # if date already tracked from prior feed run, skip
     if dates_tracked.include? wed_feed
@@ -254,15 +260,30 @@ def parse_week(feed, pull, full_message, dates_tracked)
     # add each comic to message
     comics.each do |c|
       price += c.price.to_f
-      comics_message += c.to_s
+      comics_message += "  " + c.to_s
       comics_message += "\n"
     end
 
-    # append message  
+    # append or prepend by date?
+    append = true
+    if wed_feed > Date.today and prior_feed_date > wed_feed
+      append = false
+    end
+
+    # append cost  
     message += "- $" + price.round(2).to_s + "\n"
     message += comics_message
-    full_message += message
-    full_message += "\n"
+
+    # add to full message
+    # append
+    if append 
+      full_message += message + "\n"
+    # prepend
+    else
+      full_message = message + "\n" + full_message
+    end
+
+    prior_feed_date = wed_feed
   end
 
   return full_message
@@ -304,7 +325,6 @@ def main()
   # next weeks comic feed
   url_next_week = 'http://feeds.feedburner.com/comiclistnextweek?format=xml'
 
-
   # parse RSS feed
   # this week and last week (typically) 
   # sometimes (on Sunday or Monday) this may be last week and 2 weeks ago
@@ -313,7 +333,7 @@ def main()
   end
 
   # pushover message
-  full_message = parse_week(feed, pull, '', dates_tracked)
+  full_message = parse_week(feed, pull, dates_tracked)
 
   # parse RSS feed
   # next week feed (typically)
@@ -324,7 +344,7 @@ def main()
   end
 
   # pushover message
-  full_message = parse_week(feed, pull, full_message, dates_tracked)
+  full_message += parse_week(feed, pull, dates_tracked)
 
   # display full message
   puts full_message
