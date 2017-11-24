@@ -1,9 +1,18 @@
 #!/usr/bin/env ruby
+#
+# Comics - weekly notifier
+#   by Chris Brasington
+# https://github.com/chrisbrasington/comic-books-weekly
+#
+# comiclist.com tends to update on Monday, so this is most accurate
+#   after Monday and before the next week.
+#
 require 'rss'
 require 'open-uri'
 require 'nokogiri'
 require 'yaml'
 require 'net/https'
+require 'date'
 require './settings'
 
 # remove html
@@ -69,7 +78,7 @@ def get_wednesday
 end
 
 # parse date from feed title
-def get_feed_day(item)
+def get_feed_date(item)
   date = item.to_s[/\<title>(.*?)<\/title>/,1] 
   
   if date.nil?
@@ -79,7 +88,7 @@ def get_feed_day(item)
     date.slice! " (1 Week Out)"
   end
 
-  return date
+  return Date.strptime(date,"%m/%d/%Y")
 end
 
 # parse a week of comic content
@@ -151,57 +160,89 @@ def parse_feed_item(item, pull)
   return comics
 end
 
-def parse_current_week(feed, pull, full_message)
-  full_message = ''
-  
-  @already_parsed_this_week = false
+# using date parsed out of feed
+# compare to current wednesday and create
+# readable message
+def get_week_message(feed_date)
 
+  response = ''
+
+  # subtract days apart
+  dif = (get_wednesday()-feed_date)
+
+  # this week
+  if dif == 0
+    response = 'This Week'
+  else
+    # 1 week difference
+    if dif.abs <= 7
+      response = 'One Week '
+    # 2 week difference
+    elsif dif.abs <= 14
+     response = 'Two Weeks '
+    # 3+ week difference (use number)
+    elsif dif.abs <= 21
+      response = (dif.abs/7) + ' Weeks '
+    end
+    # future - 1 week away as "next week"
+    if dif < 0 and dif.abs <= 7
+      response = 'Next Week'
+    # X weeks in the future
+    elsif dif < 0
+      response += 'Away'
+    # past - 1 week ago as "last week"
+    elsif dif > 0 and dif.abs <= 7
+      response = 'Last Week'
+    # X weeks in the past
+    else
+      response += 'Ago'
+    end
+  end
+
+  return response
+end
+
+# parse any week against pull
+# track dates to avoid duplication if called multiple times
+#   with different feed
+def parse_week(feed, pull, full_message, dates_tracked)
   # parse this week, then last week
-  iterations = 0
   feed.items.each do |item|
+  
+    # partial message of this feed
+    message = ''
 
     # parse comics from feed
     comics = parse_feed_item(item, pull)
 
     # wednesday
-    wednesday = get_wednesday()
-    wed_actual = "#{wednesday.strftime("%m/%d/%Y")}"
-    wed_feed = get_feed_day(item)
+    wed_feed = get_feed_date(item)
 
-    # this week or next week  
-    if iterations == 0
-      if wed_actual == wed_feed
-        message = 'This Week'
-        @already_parsed_this_week = true
-      else
-        message = 'Last Week'
-        # not current week, could abort
-        # or will treat feed as 'last week' and '2 weeks ago'
-      end
-    elsif iterations == 1
-      if wed_actual == wed_feed or @already_parsed_this_week
-        message = 'Last Week'
-      else 
-        message = '2 Weeks Ago'
-      end
+    # if date already tracked from prior feed run, skip
+    if dates_tracked.include? wed_feed
+      next
     end
+    dates_tracked.push(wed_feed)
 
-    message += " (" + wed_feed + ") "
+    # get weekly message
+    message += get_week_message(wed_feed) + " (" + wed_feed.strftime("%m/%d/%Y") + ") "
 
+    # individual comic message
     comics_message = ""
+
+    # aggregate week price
     price = 0
+
     # add each comic to message
     comics.each do |c|
       price += c.price.to_f
       comics_message += c.to_s
       comics_message += "\n"
     end
-    message += "- $" + price.round(2).to_s + "\n"
-    message += comics_message
-
-    iterations = iterations +1
 
     # append message  
+    message += "- $" + price.round(2).to_s + "\n"
+    message += comics_message
     full_message += message
     full_message += "\n"
   end
@@ -209,95 +250,64 @@ def parse_current_week(feed, pull, full_message)
   return full_message
 end
 
-def parse_future_week(feed, pull, full_message)
-  # parse next week
-  feed.items.each do |item|
-    
-    comics = parse_feed_item(item, pull)
+# main program
+def main()
 
-    # wednesday
-    wednesday = get_wednesday()
-    wed_actual = "#{wednesday.strftime("%m/%d/%Y")}"
-    wed_feed = get_feed_day(item)
-    
-    if wed_actual == wed_feed
-      message = 'This Week'
-      # don't parse same week from 2 feeds twice
-      if @already_parsed_this_week
-        next
-      end
-    else
-      days_away = (Date.strptime(wed_feed, "%m/%d/%Y")-Date.strptime(wed_actual, "%m/%d/%Y")).to_i
-      if days_away == 14
-        message = 'Two Weeks'
-      elsif days_away == 7
-        message = 'Next Week'
-      end
-    end
-    message += ' (' + wed_feed + ") "
-
-    comics_message = ""
-    price = 0
-    # add each comic to message
-    comics.each do |c|
-      price += c.price
-      comics_message += c.to_s
-      comics_message += "\n"
-    end
-    
-    message += "- $" + price.round(2).to_s + "\n"
-    message += comics_message
-    
-    # append message
-    full_message = full_message + message + "\n"
-
+  # provide pull list file
+  if ARGV.empty?
+    puts 'Please provide pull list.'
+    exit
   end
 
-  return full_message
-end
+  # dates tracked to avoid duplication with multiple feeds
+  dates_tracked = []
 
-# weekly comic feed
-url_this_week = 'http://feeds.feedburner.com/comiclistfeed?format=xml'
+  # individual feed message
+  feed = ''
 
-# next weeks comic feed
-url_next_week = 'http://feeds.feedburner.com/comiclistnextweek?format=xml'
+  # weekly comic feed
+  url_this_week = 'http://feeds.feedburner.com/comiclistfeed?format=xml'
 
-# pull list of comics
-pull = File.read(ARGV[0]).split("\n").map(&:downcase)
+  # next weeks comic feed
+  url_next_week = 'http://feeds.feedburner.com/comiclistnextweek?format=xml'
 
-# comics released every Wednesday
-wednesday = get_wednesday()
+  # pull list of comics
+  pull = File.read(ARGV[0]).split("\n").map(&:downcase)
 
-# first check this week feed (includes last week)
-# next check next weeks feed
-feed = ''
+  # parse RSS feed
+  # this week and last week (typically) 
+  # sometimes (on Sunday or Monday) this may be last week and 2 weeks ago
+  open(url_this_week) do |rss|
+    feed = RSS::Parser.parse(rss)
+  end
 
-# this week
-open(url_this_week) do |rss|
-  # parse RSS
-  feed = RSS::Parser.parse(rss)
-end
+  # pushover message
+  full_message = parse_week(feed, pull, '', dates_tracked)
 
-# pushover message
-full_message = parse_current_week(feed, pull, '')
+  # parse RSS feed
+  # next week feed (typically)
+  # sometimes (on Sunday or Monday) this may be the current week
+  open(url_next_week) do |rss|
+    # parse RSS
+    feed = RSS::Parser.parse(rss)
+  end
 
-# next week feed
-open(url_next_week) do |rss|
-  # parse RSS
-  feed = RSS::Parser.parse(rss)
-end
+  # pushover message
+  full_message = parse_week(feed, pull, full_message, dates_tracked)
 
-full_message = parse_future_week(feed, pull, full_message)
+  # display full message
+  puts full_message
 
-# display full message
-puts full_message
-
-# if pushover setting exists, respond via pushover
-if !ARGV[1].nil?
-  settings = Settings.new(ARGV[1])
-  if !settings.list['pushover'].nil?
-    apitoken = settings.list['pushover']['apitoken']
-    usertoken = settings.list['pushover']['userkey']
-    pushover(apitoken, usertoken, full_message)
+  # if pushover setting exists, respond via pushover
+  if !ARGV[1].nil?
+    settings = Settings.new(ARGV[1])
+    if !settings.list['pushover'].nil?
+      apitoken = settings.list['pushover']['apitoken']
+      usertoken = settings.list['pushover']['userkey']
+      pushover(apitoken, usertoken, full_message)
+    end
   end
 end
+
+# run main
+main()
