@@ -128,7 +128,8 @@ def parse_feed_item(item, pull)
     #   'Star Wars #' comics of that single series
     # 'annual' allows catching annuals of comics in pull, not specified as annuals
     # skip variants, they can show up weeks after initial release
-    if row.include? '#' and not row.include? "Variant"
+    # skip director's cut, since I don't care about reprints either
+    if row.include? '#' and not row.include? "Variant" and not row.include? "Director's Cut"
       # comic object
       comic = Comic.new(row.to_s)
 
