@@ -1,6 +1,6 @@
 ## Comics - Weekly Notifier
 
-Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking for comics included in pull.txt to generate a list of comics which came out this week on Wednesday (and special days like free-comic-book day). TP (Trade Paperbacks) and AR (Ask Retailer Pricing) Merchandise is ignored. Variants (dupes) are ignored.
+Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking for comics included in pull.txt to generate a list of comics which came out this week on Wednesday (and special days like free-comic-book day). 
 
 #### Parameters:
 ```
@@ -20,9 +20,9 @@ Star Wars
 Star Wars Darth Vader
 ```
 #### Pull configuration:
-Looking only for numbered issues (not tradeback (TP) or AR merchandise). Skip variants, they can show up weeks after initial release. Include annuals.
+Looking only for numbered issues, including annuals. Ignored are Variants, TP (Trade Paperbacks) and AR (Ask Retailer Pricing) Merchandise. 
 
-Titles are strict to main series: name + ' #'. Example: 'Batman' will only grab 'Batman #'. If extra series are desired, pull file should include a wildcard symbol '*'.
+Titles are strict to main series unless the wildcard '*' is included or a single issue is pulled with the '#' specified.
 
 'Batman' will grab only main series...
 ```
