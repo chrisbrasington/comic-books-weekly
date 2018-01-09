@@ -47,6 +47,7 @@ Spider-Man Deadpool #26, because pull file includes '#' in-line, only that singl
     
 #### Sample Input
 This week: [http://www.comiclist.com/index.php/newreleases/this-week](http://www.comiclist.com/index.php/newreleases/this-week)
+
 Next week: [https://feeds.feedburner.com/comiclistnextweek](https://feeds.feedburner.com/comiclistnextweek)
 #### Sample Output
 ```
