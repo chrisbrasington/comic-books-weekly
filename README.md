@@ -19,6 +19,30 @@ Spider-Man Deadpool #26
 Star Wars
 Star Wars Darth Vader
 ```
+#### Sample Input
+This week: [http://www.comiclist.com/index.php/newreleases/this-week](http://www.comiclist.com/index.php/newreleases/this-week)
+
+Next week: [https://feeds.feedburner.com/comiclistnextweek](https://feeds.feedburner.com/comiclistnextweek)
+#### Sample Output
+```
+This Week (01/10/2018) - $15.96
+  Mister Miracle #6
+  Phoenix Resurrection The Return Of Jean Grey #3 *
+  Spider-Man Deadpool #26
+  Star Wars Darth Vader #10
+
+Last Week (01/03/2018) - $17.95
+  Batman #38
+  Batman White Knight #4
+  Bombshells United #9
+  Phoenix Resurrection The Return Of Jean Grey #2 *
+  Star Wars #41
+
+Next Week (01/17/2018) - $9.97
+  Batman #39
+  Bombshells United #10
+  Star Wars #42
+```
 #### Pull configuration:
 Looking only for numbered issues, including annuals. Ignored are Variants, TP (Trade Paperbacks) and AR (Ask Retailer Pricing) Merchandise. 
 
@@ -43,29 +67,4 @@ Titles are strict to main series unless the wildcard '*' is included or a single
 Spider-Man Deadpool #26, because pull file includes '#' in-line, only that single issue will pull that single issue.
 ```
 'Spider-Man Deadpool #26'
-```
-    
-#### Sample Input
-This week: [http://www.comiclist.com/index.php/newreleases/this-week](http://www.comiclist.com/index.php/newreleases/this-week)
-
-Next week: [https://feeds.feedburner.com/comiclistnextweek](https://feeds.feedburner.com/comiclistnextweek)
-#### Sample Output
-```
-This Week (01/10/2018) - $15.96
-  Mister Miracle #6
-  Phoenix Resurrection The Return Of Jean Grey #3 *
-  Spider-Man Deadpool #26
-  Star Wars Darth Vader #10
-
-Last Week (01/03/2018) - $17.95
-  Batman #38
-  Batman White Knight #4
-  Bombshells United #9
-  Phoenix Resurrection The Return Of Jean Grey #2 *
-  Star Wars #41
-
-Next Week (01/17/2018) - $9.97
-  Batman #39
-  Bombshells United #10
-  Star Wars #42
 ```
