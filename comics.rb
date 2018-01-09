@@ -121,15 +121,8 @@ def parse_feed_item(item, pull)
   # split per row
   item.to_s.split('<br />').each do |row|
       
-    # looking only for numbered issues (not tradeback (TP) or AR merchandise)
-    # remove the + ' #' if you want to allow less 'full titles'
-    #   for example, 'Star Wars' will pick up seoncary comics like 'Star Wars Darth Vader'
-    #   with the space #, it'll only pick up strictly 
-    #   'Star Wars #' comics of that single series
-    # 'annual' allows catching annuals of comics in pull, not specified as annuals
-    # skip variants, they can show up weeks after initial release
-    # skip director's cut, since I don't care about reprints either
-    if row.include? '#' and not row.include? "Variant" and not row.include? "Director's Cut"
+    # detect single issue matches
+    if row.include? '#' and not row.include? "Variant"
       # comic object
       comic = Comic.new(row.to_s)
 
@@ -140,21 +133,16 @@ def parse_feed_item(item, pull)
       
       # if not already added (avoid duplicates)
       #   and matches a record in the pull.
-      # This second check helps remove accidental wildcarding
-      # Example: if you're looking for 'Batman' the include? will
-      #   also pick up 'All-Star Batman'. 
-      # It'll only accept if it is in the pull text
-      #   with the exception of annuals.
       if !comics.any? {|c| c.name == comic.name} and 
         (
           pull.any?{ |p| p.to_s == comic.short_name} or
+          pull.any?{ |p| p.to_s == comic.to_s.downcase} or
           pull.any?{ |p| p.to_s + " annual" == comic.short_name} 
         )
         # add comic
         comics.push(comic)
+
       # check comic against any wildcards in the pull
-      # Example: "batman creature*" will be found within "batman creature of the night"
-      #   "nightwing*" will be found within "nightwing the new order"
       else
         wildcards.each do |w|
           if comic.short_name.include? w.to_s and !comics.any? {|c| c.name == comic.name}
@@ -212,7 +200,7 @@ def get_week_message(feed_date)
     end
   end
 
-  # special - non-Wednesday feed date
+  # special - non-Wednesday feed date (uncommon)
   # such as halloween or local comicbook shop day
   #   (maybe free-comic-book-day or batman day but those are likely on wednesday already)
   if feed_date.wday != 3
