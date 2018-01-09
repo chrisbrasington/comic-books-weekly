@@ -2,6 +2,8 @@
 
 Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking for comics included in pull.txt to generate a list of comics which came out this week on Wednesday (and special days like free-comic-book day). 
 
+**Note:** Comicslist tends to update and finalize "this week" on Monday. "Next week" is less accurate and may be missing titles after update. If you are to schedule this, I would suggest Tuesday or Wednesday - Sunday is the least accurate time to run this.
+
 #### Parameters:
 ```
 comics.rb pull.txt settings.yml 
