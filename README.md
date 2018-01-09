@@ -1,6 +1,6 @@
 ## Comics - Weekly Notifier
 
-Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking for comics included in pull.txt to generate a list of comics which came out this week on Wednesday. TP (Trade Paperbacks) and AR (Ask Retailer Pricing) Merchandise is ignored. Dupes (variants) are ignored.
+Parses [Comicslist](http://www.comiclist.com/index.php) weekly RSS feed looking for comics included in pull.txt to generate a list of comics which came out this week on Wednesday (and special days like free-comic-book day). TP (Trade Paperbacks) and AR (Ask Retailer Pricing) Merchandise is ignored. Variants (dupes) are ignored.
 
 #### Parameters:
 ```
