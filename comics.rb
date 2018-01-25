@@ -14,7 +14,7 @@ require 'yaml'
 require 'net/https'
 require 'date'
 
-# settings file
+
 class Settings
   attr_accessor :list
   def initialize (path)
@@ -127,7 +127,9 @@ def parse_feed_item(item, pull)
       comic = Comic.new(row.to_s)
 
       # skip over bad parse
-      if comic.nil? or comic.short_name.nil?
+      # AR will price to 0.0, ignore 
+      #   (these can be bullshit graded editions, are never weekly releases)
+      if comic.nil? or comic.short_name.nil? or comic.price == 0
         next
       end
       
@@ -141,7 +143,7 @@ def parse_feed_item(item, pull)
         )
         # add comic
         comics.push(comic)
-
+        
       # check comic against any wildcards in the pull
       else
         wildcards.each do |w|
