@@ -5,6 +5,9 @@ Descender
 I Hate Fairyland
 Monstress
 
+# DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+Black Hammer*
+
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
 
@@ -14,19 +17,13 @@ Rocko*
 # DC BATMAN     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Batman
 *Prelude to the Wedding*
-Batman Creature of the Night
-Batman White Knight
 
 # DC            ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Bombshells United ending June 6th
-Bombshells United
-Bombshells*
 # Doomsday clock super delayed
 Doomsday Clock
 Mera*
 Mister Miracle
 *No Justice*
-Sideways
 Terrifics
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,6 +31,14 @@ Star Wars
 Star Wars Darth Vader
 Star Wars Doctor Aphra
 
+# ENDING SOON   ~~~~~~~~~~~~~~~~~~~~~~~~~
+Batman White Knight
+Batman Creature of the Night
+# Bombshells United ending June 6th
+Bombshells United
+
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
 #Raven Daughter*
-#Rick and Morty
+# thin ice
+Rick and Morty
+#Sideways
