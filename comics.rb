@@ -307,6 +307,9 @@ def main()
   # pull list of comics
   pull = File.read(pull_file).split("\n").map(&:downcase)
 
+  # remove empty lines or comment lines in pull.txt
+  pull = pull.reject{|p| p.empty? or p.index('#') == 0 }
+
   # dates tracked to avoid duplication with multiple feeds
   dates_tracked = []
 
