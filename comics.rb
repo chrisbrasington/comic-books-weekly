@@ -168,34 +168,34 @@ end
 # readable message
 def get_week_message(feed_date)
 
-  response = ''
+  response = 'Comics '
 
   # subtract days apart
   dif = (get_wednesday()-feed_date)
 
   # this week
   if dif == 0
-    response = 'This Week'
+    response += 'This Week'
   else
     # 1 week difference
     if dif.abs <= 7
-      response = 'One Week '
+      response += 'One Week '
     # 2 week difference
     elsif dif.abs <= 14
-     response = 'Two Weeks '
+     response += 'Two Weeks '
     # 3+ week difference (use number)
     elsif dif.abs <= 21
-      response = (dif.abs/7) + ' Weeks '
+      response += (dif.abs/7) + ' Weeks '
     end
     # future - 1 week away as "next week"
     if dif < 0 and dif.abs <= 7
-      response = 'Next Week'
+      response += 'Next Week'
     # X weeks in the future
     elsif dif < 0
       response += 'Away'
     # past - 1 week ago as "last week"
     elsif dif > 0 and dif.abs <= 7
-      response = 'Last Week'
+      response += 'Last Week'
     # X weeks in the past
     else
       response += 'Ago'
@@ -256,6 +256,10 @@ def parse_week(feed, pull, dates_tracked)
       price += c.price.to_f
       comics_message += "  " + c.to_s
       comics_message += "\n"
+    end
+
+    if comics.size == 0
+      comics_message += "  Nothing\n"
     end
 
     # append or prepend by date?
