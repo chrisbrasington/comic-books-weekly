@@ -178,27 +178,29 @@ def get_week_message(feed_date)
     response += 'This Week'
   else
     # 1 week difference
-    if dif.abs <= 7
-      response += 'One Week '
-    # 2 week difference
-    elsif dif.abs <= 14
-     response += 'Two Weeks '
-    # 3+ week difference (use number)
-    elsif dif.abs <= 21
-      response += (dif.abs/7) + ' Weeks '
-    end
-    # future - 1 week away as "next week"
-    if dif < 0 and dif.abs <= 7
-      response += 'Next Week'
-    # X weeks in the future
-    elsif dif < 0
-      response += 'Away'
-    # past - 1 week ago as "last week"
-    elsif dif > 0 and dif.abs <= 7
-      response += 'Last Week'
-    # X weeks in the past
+    if dif <= 7
+      # next week
+      if dif < 0
+        response += 'Next Week'
+      # last week
+      else
+        response += 'Last Week'
+      end
     else
-      response += 'Ago'
+      # 2 week difference
+      if dif.abs <= 14
+       response += 'Two Weeks '
+      # 3+ week difference (use number)
+      elsif dif.abs <= 21
+        response += (dif.abs/7) + ' Weeks '
+      end
+      # future weeks away
+      if dif < 0
+        response += 'Away'
+      # past weeks ago
+      else
+        response += 'Ago'
+      end
     end
   end
 

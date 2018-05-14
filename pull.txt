@@ -6,7 +6,7 @@ I Hate Fairyland
 Monstress
 
 # DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Black Hammer*
+# Black Hammer*
 
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
@@ -33,7 +33,7 @@ Star Wars Darth Vader
 Star Wars Doctor Aphra
 
 # ENDING SOON   ~~~~~~~~~~~~~~~~~~~~~~~~~
-Batman White Knight
+# Batman White Knight
 Batman Creature of the Night
 # Bombshells United ending June 6th
 Bombshells United
