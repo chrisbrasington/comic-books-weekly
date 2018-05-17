@@ -1,4 +1,4 @@
-# ENDING    	~~~~~~~~~~~~~~~~~~~~~~~~~
+# ENDING        ~~~~~~~~~~~~~~~~~~~~~~~~~
 # May 30th
 #   Barrier - 5 issues 
 #   No Justice - 4 issues
@@ -7,7 +7,7 @@
 # July 25th
 #   Mera Queen of Atlantis
 
-# IMAGE 		~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# IMAGE         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Barrier
 Descender
 I Hate Fairyland
@@ -54,7 +54,7 @@ Star Wars
 Star Wars Darth Vader
 Star Wars Doctor Aphra
 
-# ARCHIE		~~~~~~~~~~~~~~~~~~~~~~~~~
+# ARCHIE        ~~~~~~~~~~~~~~~~~~~~~~~~~
 Jughead The Hunger
 
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,6 +62,6 @@ Jughead The Hunger
 Rick and Morty #38
 #Sideways
 
-# ENDED			~~~~~~~~~~~~~~~~~~~~~~~~~
+# ENDED	        ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Batman White Knight
 # Bombshells
