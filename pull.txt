@@ -1,12 +1,20 @@
-# IMAGE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Barrier - 5 issue run in May 2018
+# ENDING    	~~~~~~~~~~~~~~~~~~~~~~~~~
+# May 30th
+#   Barrier - 5 issues 
+#   No Justice - 4 issues
+# June 6th
+#   Bombshells United 
+# July 25th
+#   Mera Queen of Atlantis
+
+# IMAGE 		~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Barrier
 Descender
 I Hate Fairyland
 Monstress
 
 # DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Black Hammer*
+Black Hammer Quantum*
 
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
@@ -16,30 +24,44 @@ Rocko*
 
 # DC BATMAN     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Batman
+Batman Creature of the Night
+Bombshells United
+# Wedding prelude - 5 issue run thru June 2018
 *Prelude to the Wedding*
 Detective Comics
 
 # DC            ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Doomsday clock super delayed
+# Doomsday Clock - 12 issue run
 Doomsday Clock
-Mera*
+Mera Queen of Atlantis
+# Mister Miracle - 12 issue run
 Mister Miracle
-*No Justice*
 Terrifics
 
+# DC Justice League ~~~~~~~~~~~~~~~~~~~~~
+Justice League No Justice
+# June 6, 2018
+Justice League
+# July 25, 2018
+Justice League Dark
+# July 11, 2018
+Justice League Odyssey
+
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
+# Amazing Spider-Man starts July 11, 2018
+Amazing Spider-Man
 Star Wars
 Star Wars Darth Vader
 Star Wars Doctor Aphra
 
-# ENDING SOON   ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Batman White Knight
-Batman Creature of the Night
-# Bombshells United ending June 6th
-Bombshells United
+# ARCHIE		~~~~~~~~~~~~~~~~~~~~~~~~~
+Jughead The Hunger
 
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
 #Raven Daughter*
-# thin ice
-Rick and Morty
+Rick and Morty #38
 #Sideways
+
+# ENDED			~~~~~~~~~~~~~~~~~~~~~~~~~
+# Batman White Knight
+# Bombshells
