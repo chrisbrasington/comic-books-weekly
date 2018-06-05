@@ -1,14 +1,4 @@
-# ENDING        ~~~~~~~~~~~~~~~~~~~~~~~~~
-# May 30th
-#   Barrier - 5 issues 
-#   No Justice - 4 issues
-# June 6th
-#   Bombshells United 
-# July 25th
-#   Mera Queen of Atlantis
-
 # IMAGE         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Barrier
 Descender
 I Hate Fairyland
 Monstress
@@ -33,13 +23,11 @@ Detective Comics
 # DC            ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Doomsday Clock - 12 issue run
 Doomsday Clock
-Mera Queen of Atlantis
 # Mister Miracle - 12 issue run
 Mister Miracle
 Terrifics
 
 # DC Justice League ~~~~~~~~~~~~~~~~~~~~~
-Justice League No Justice
 # June 6, 2018
 Justice League
 # July 25, 2018
@@ -48,7 +36,7 @@ Justice League Dark
 Justice League Odyssey
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Amazing Spider-Man starts July 11, 2018
+# Amazing Spider-Man renumbering starts July 11, 2018
 Amazing Spider-Man
 Star Wars
 Star Wars Darth Vader
@@ -58,10 +46,13 @@ Star Wars Doctor Aphra
 Jughead The Hunger
 
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
-#Raven Daughter*
+# Mera Queen of Atlantis
+# Raven Daughter*
 Rick and Morty #38
-#Sideways
+# Sideways
 
 # ENDED	        ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Batman White Knight
+Barrier
+# Batman White Knight - 8 issues
 # Bombshells
+Justice League No Justice
