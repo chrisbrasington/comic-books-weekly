@@ -1,6 +1,5 @@
 # IMAGE         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Descender
-I Hate Fairyland
 Monstress
 
 # DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -15,9 +14,7 @@ Rocko*
 # DC BATMAN     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Batman
 Batman Creature of the Night
-Bombshells United
-# Wedding prelude - 5 issue run thru June 2018
-*Prelude to the Wedding*
+Catwoman
 Detective Comics
 
 # DC            ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,23 +33,24 @@ Justice League Dark
 Justice League Odyssey
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Amazing Spider-Man renumbering starts July 11, 2018
 Amazing Spider-Man
 Star Wars
 Star Wars Darth Vader
 Star Wars Doctor Aphra
 
 # ARCHIE        ~~~~~~~~~~~~~~~~~~~~~~~~~
-Jughead The Hunger
+# Jughead The Hunger
 
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Mera Queen of Atlantis
 # Raven Daughter*
-Rick and Morty #38
+# Rick and Morty
 # Sideways
 
 # ENDED	        ~~~~~~~~~~~~~~~~~~~~~~~~~
-Barrier
+# Barrier
 # Batman White Knight - 8 issues
 # Bombshells
-Justice League No Justice
+# Bombshells United
+I Hate Fairyland
+# Justice League No Justice
