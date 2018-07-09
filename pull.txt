@@ -1,9 +1,10 @@
 # IMAGE         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Descender
+Middlewest
 Monstress
 
 # DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Black Hammer Quantum*
+Black Hammer*
+Quantum Age
 
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
@@ -34,6 +35,7 @@ Justice League Odyssey
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
 Amazing Spider-Man
+Fantastic Four
 Star Wars
 Star Wars Darth Vader
 Star Wars Doctor Aphra
@@ -52,5 +54,6 @@ Star Wars Doctor Aphra
 # Batman White Knight - 8 issues
 # Bombshells
 # Bombshells United
+Descender
 I Hate Fairyland
 # Justice League No Justice
