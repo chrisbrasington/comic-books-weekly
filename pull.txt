@@ -4,13 +4,16 @@ Monstress
 
 # DARK HORSE    ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Black Hammer*
-Quantum Age
+Quantum Age*
 
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
 
 # BOOM!         ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Rocko*
+
+# BONGO         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+Futurama*
 
 # DC BATMAN     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Batman
