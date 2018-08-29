@@ -122,7 +122,7 @@ def parse_feed_item(item, pull)
   item.to_s.split('<br />').each do |row|
       
     # detect single issue matches
-    if row.include? '#' and not row.include? "Variant"
+    if row.include? '#' and not row.include? "Variant" and not row.include? "Edition"
       # comic object
       comic = Comic.new(row.to_s)
 
@@ -242,7 +242,7 @@ def parse_week(feed, pull, dates_tracked)
     end
 
     if comics.size == 0
-      comics_message += "  Nothing\n"
+      comics_message += "  No comics this week.\n"
     end
 
     # append or prepend by date?
