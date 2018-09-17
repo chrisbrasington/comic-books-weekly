@@ -23,18 +23,14 @@ Catwoman
 Detective Comics
 
 # DC            ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Doomsday Clock - 12 issue run
 Doomsday Clock
-# Mister Miracle - 12 issue run
+Heroes In Crisis
 Mister Miracle
 Terrifics
 
 # DC Justice League ~~~~~~~~~~~~~~~~~~~~~
-# June 6, 2018
 Justice League
-# July 25, 2018
 Justice League Dark
-# July 11, 2018
 Justice League Odyssey
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +44,6 @@ Star Wars Doctor Aphra
 # Jughead The Hunger
 
 # DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Mera Queen of Atlantis
 # Raven Daughter*
 # Rick and Morty
 # Sideways
@@ -61,3 +56,4 @@ Star Wars Doctor Aphra
 Descender
 I Hate Fairyland
 # Justice League No Justice
+# Mera Queen of Atlantis
