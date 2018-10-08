@@ -1,5 +1,5 @@
 # IMAGE         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Death Or Glory
+#Death Or Glory
 Middlewest
 Monstress
 
@@ -9,9 +9,6 @@ Quantum Age*
 
 # ONI PRESS     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Invader Zim
-
-# BOOM!         ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Rocko*
 
 # BONGO         ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Futurama*
@@ -31,7 +28,6 @@ Terrifics
 # DC Justice League ~~~~~~~~~~~~~~~~~~~~~
 Justice League
 Justice League Dark
-Justice League Odyssey
 
 # MARVEL        ~~~~~~~~~~~~~~~~~~~~~~~~~
 Amazing Spider-Man
@@ -43,14 +39,9 @@ Star Wars Doctor Aphra
 # ARCHIE        ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Jughead The Hunger
 
-# DROPPED       ~~~~~~~~~~~~~~~~~~~~~~~~~
-# Raven Daughter*
-# Rick and Morty
-# Sideways
-
 # ENDED	        ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Barrier
-# Batman White Knight - 8 issues
+Batman White Knight*
 # Bombshells
 # Bombshells United
 Descender
